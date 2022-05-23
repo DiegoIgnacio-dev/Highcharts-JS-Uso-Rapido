@@ -187,6 +187,172 @@ function Fn_Graph_Pie(options) {
     Build(options.idElem, options.title, objHC);
 }
 
+
+
+//FUNCION SETEAR GRAFICO DE LINEAS
+function grafico() {
+
+    //LISTA DE DATOS PARA COMPLETAR EL GRAFICO LINEAL
+    //DATOS TRAIDOS DESDE UNA BD SQL SERVER USANDO UN BACK DE 4 CAPAS EN VB.NET
+    var arrDataLine = [
+        {
+            "FECHA": "/Date(1653278400000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653282000000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653285600000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653289200000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653292800000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653296400000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653300000000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653303600000)/",
+            "NUMERO": 21
+          },
+          {
+            "FECHA": "/Date(1653307200000)/",
+            "NUMERO": 18
+          },
+          {
+            "FECHA": "/Date(1653310800000)/",
+            "NUMERO": 9
+          },
+          {
+            "FECHA": "/Date(1653314400000)/",
+            "NUMERO": 4
+          },
+          {
+            "FECHA": "/Date(1653318000000)/",
+            "NUMERO": 35
+          },
+          {
+            "FECHA": "/Date(1653321600000)/",
+            "NUMERO": 60
+          },
+          {
+            "FECHA": "/Date(1653325200000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653328800000)/",
+            "NUMERO": 50
+          },
+          {
+            "FECHA": "/Date(1653332400000)/",
+            "NUMERO": 45
+          },
+          {
+            "FECHA": "/Date(1653336000000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653339600000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653343200000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653346800000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653350400000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653354000000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653357600000)/",
+            "NUMERO": 0
+          },
+          {
+            "FECHA": "/Date(1653361200000)/",
+            "NUMERO": 0
+          }
+    ];
+    var grafico =0;
+    if (grafico == 0) {
+        var arrPar = [];
+        var arrVal = [];
+        for (i = 0; i < arrDataLine.length; i++) {
+            arrVal.push(parseFloat(arrDataLine[i].NUMERO));
+            arrPar.push(function () {
+                //Obtener valores
+                //Metodos para parsear las fechas y horas 
+                var nDate = String(arrDataLine[i].FECHA);
+                nDate = nDate.toUpperCase().replace("/DATE(", "");
+                nDate = nDate.replace(")/", "");
+                var obj_date = new Date(parseInt(nDate));
+                //var dd = parseInt(obj_date.getDate());
+                //var MM = parseInt(obj_date.getMonth()) + 1;
+                //var yy = parseInt(obj_date.getFullYear());
+                //if (dd < 10) { dd = "0" + dd; }
+                //if (MM < 10) { MM = "0" + MM; }
+                var hh = parseInt(obj_date.getHours());
+                var mm = parseInt(obj_date.getMinutes());
+                if (hh < 10) { hh = "0" + hh; }
+                if (mm < 10) { mm = "0" + mm; }
+                return String(hh + ":" + mm);
+            }());
+        }
+
+        Highcharts.chart('Summary_Graph', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: arrPar
+            },
+            yAxis: {
+                title: {
+                    text: 'Atenciones'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [{
+                name: 'Total Atenciones',
+                data: arrVal
+            }]
+        });
+    };
+};
+
+
 //LA ESTRUCTURA DE LA CONFIGURACION DEL GRAFICO ESTA EN LA DOCUMENTACION https://www.highcharts.com/docs/index
 //TODO ES PARAMETRIZABLE USANDO BIEN LAS PROPIEDADES DEL OBJETO QUE SE DEFINE COMO "objHC"
 
